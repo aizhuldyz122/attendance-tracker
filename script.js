@@ -11,7 +11,6 @@ let defaultStudents = [
   "Еркебулан"
 ];
 
-
 window.onload = () => {
   let params = new URLSearchParams(window.location.search);
   currentGroup = params.get("group");
@@ -28,7 +27,7 @@ window.onload = () => {
   render();
 };
 
-
+// ADD
 function addStudent() {
   let input = document.getElementById("studentInput");
   let name = input.value.trim();
@@ -44,32 +43,33 @@ function addStudent() {
   render();
 }
 
-function render(data = students[currentGroup]) {
+// RENDER
+function render(list = students[currentGroup]) {
   let ul = document.getElementById("studentList");
   ul.innerHTML = "";
 
-  data.forEach((s, i) => {
+  list.forEach((s, i) => {
     ul.innerHTML += `
       <li>
-        <span>${s.name} - <b class="${s.status}">${s.status}</b></span>
+        <span>${s.name} - <b>${s.status}</b></span>
 
         <div>
-          <button onclick="setStatus(${i}, 'present')">P</button>
-          <button onclick="setStatus(${i}, 'absent')">A</button>
-          <button onclick="setStatus(${i}, 'late')">L</button>
+          <button onclick="setStatus(${i}, 'present')">Present</button>
+          <button onclick="setStatus(${i}, 'absent')">Absent</button>
+          <button onclick="setStatus(${i}, 'late')">Late</button>
         </div>
       </li>
     `;
   });
 }
 
-
+// STATUS
 function setStatus(i, status) {
   students[currentGroup][i].status = status;
   render();
 }
 
-
+// SEARCH
 function searchStudent() {
   let val = document.getElementById("searchInput").value.toLowerCase();
 
@@ -80,21 +80,18 @@ function searchStudent() {
   render(filtered);
 }
 
-
+// BACK
 function goBack() {
   window.location.href = "index.html";
 }
 
-
+// FINISH
 function finishAttendance() {
   let present = students[currentGroup].filter(s => s.status === "present").length;
   let late = students[currentGroup].filter(s => s.status === "late").length;
   let absent = students[currentGroup].filter(s => s.status === "absent").length;
 
   alert(
-    `Group: ${currentGroup}\n` +
-    `Present: ${present}\n` +
-    `Late: ${late}\n` +
-    `Absent: ${absent}`
+    `Group: ${currentGroup}\nPresent: ${present}\nLate: ${late}\nAbsent: ${absent}`
   );
 }
