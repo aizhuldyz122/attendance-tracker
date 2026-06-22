@@ -1,104 +1,32 @@
-let students = {};
-let currentGroup = "";
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Group</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-let defaultStudents = [
-  "Айбек",
-  "Аружан",
-  "Медина",
-  "Данияр",
-  "Нуржан",
-  "Айсулу",
-  "Еркебулан"
-];
+<div class="top-bar">
+  <button onclick="goBack()">⬅ Back</button>
+  <h2 id="groupName">Group</h2>
+</div>
 
-window.onload = () => {
-  let params = new URLSearchParams(window.location.search);
-  currentGroup = params.get("group");
+<div class="panel">
 
-  document.getElementById("groupName").innerText = currentGroup;
+  <input id="searchInput" placeholder="Search student..." onkeyup="searchStudent()">
 
-  if (!students[currentGroup]) {
-    students[currentGroup] = defaultStudents.map(name => ({
-      name: name,
-      status: "absent"
-    }));
-  }
+  <div class="add-box">
+    <input id="studentInput" placeholder="Student name">
+    <button onclick="addStudent()">Add</button>
+  </div>
 
-  render();
-};
+  <ul id="studentList"></ul>
 
+  <button class="finish" onclick="finishAttendance()">Finish</button>
 
-function save() {
-  
-}
+</div>
 
+<script src="script.js"></script>
 
-function addStudent() {
-  let input = document.getElementById("studentInput");
-  let name = input.value.trim();
-
-  if (name === "") return;
-
-  students[currentGroup].push({
-    name: name,
-    status: "absent"
-  });
-
-  input.value = "";
-  render();
-}
-
-
-function render(list = students[currentGroup]) {
-  let ul = document.getElementById("studentList");
-  ul.innerHTML = "";
-
-  list.forEach((s, i) => {
-    ul.innerHTML += `
-      <li>
-        <span>${s.name} - <b class="${s.status}">${s.status}</b></span>
-
-        <div>
-          <button onclick="setStatus(${i}, 'present')">Present</button>
-          <button onclick="setStatus(${i}, 'absent')">Absent</button>
-          <button onclick="setStatus(${i}, 'late')">Late</button>
-        </div>
-      </li>
-    `;
-  });
-}
-
-
-function setStatus(i, status) {
-  students[currentGroup][i].status = status;
-  render();
-}
-
-
-function searchStudent() {
-  let val = document.getElementById("searchInput").value.toLowerCase();
-
-  let filtered = students[currentGroup].filter(s =>
-    s.name.toLowerCase().includes(val)
-  );
-
-  render(filtered);
-}
-
-function goBack() {
-  window.location.href = "index.html";
-}
-
-
-function finishAttendance() {
-  let present = students[currentGroup].filter(s => s.status === "present").length;
-  let late = students[currentGroup].filter(s => s.status === "late").length;
-  let absent = students[currentGroup].filter(s => s.status === "absent").length;
-
-  alert(
-    `GROUP: ${currentGroup}\n` +
-    `Present: ${present}\n` +
-    `Late: ${late}\n` +
-    `Absent: ${absent}`
-  );
-}
+</body>
+</html>
