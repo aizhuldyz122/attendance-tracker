@@ -32,7 +32,7 @@ window.onload = () => {
   render();
 };
 
-// ADD STUDENT
+
 function addStudent() {
   let input = document.getElementById("studentInput");
   let name = input.value.trim();
@@ -48,7 +48,7 @@ function addStudent() {
   render();
 }
 
-// RENDER (ВАЖНО: КНОПКИ НАСТОЯЩИЕ)
+
 function render() {
   let ul = document.getElementById("studentList");
   ul.innerHTML = "";
@@ -68,13 +68,12 @@ function render() {
   });
 }
 
-// STATUS
+
 function setStatus(i, status) {
   students[currentGroup][i].status = status;
   render();
 }
 
-// SEARCH (НЕ ЛОМАЕТ ДАННЫЕ)
 function searchStudent() {
   let val = document.getElementById("searchInput").value.toLowerCase();
 
@@ -100,12 +99,12 @@ function searchStudent() {
   });
 }
 
-// BACK
+
 function goBack() {
   window.location.href = "index.html";
 }
 
-// FINISH
+
 function finishAttendance() {
   let present = students[currentGroup].filter(s => s.status === "present").length;
   let late = students[currentGroup].filter(s => s.status === "late").length;
