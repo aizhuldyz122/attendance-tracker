@@ -1,5 +1,5 @@
-let students = {};
 let currentGroup = "";
+let students = JSON.parse(localStorage.getItem("attendance")) || {};
 
 let defaultStudents = [
   "Айбек",
@@ -22,11 +22,15 @@ window.onload = () => {
       name,
       status: "absent"
     }));
+    save();
   }
 
   render();
 };
 
+function save() {
+  localStorage.setItem("attendance", JSON.stringify(students));
+}
 
 function addStudent() {
   let input = document.getElementById("studentInput");
@@ -40,35 +44,48 @@ function addStudent() {
   });
 
   input.value = "";
+  save();
   render();
 }
-
 
 function render(list = students[currentGroup]) {
   let ul = document.getElementById("studentList");
   ul.innerHTML = "";
 
+  let present = 0;
+
   list.forEach((s, i) => {
+    if (s.status === "present") present++;
+
     ul.innerHTML += `
       <li>
-        <span>${s.name} - <b>${s.status}</b></span>
+        <span>${s.name} - <b class="${s.status}">${s.status}</b></span>
 
         <div>
-          <button onclick="setStatus(${i}, 'present')">Present</button>
-          <button onclick="setStatus(${i}, 'absent')">Absent</button>
-          <button onclick="setStatus(${i}, 'late')">Late</button>
+          <button onclick="setStatus(${i}, 'present')">✔</button>
+          <button onclick="setStatus(${i}, 'absent')">✖</button>
+          <button onclick="setStatus(${i}, 'late')">⏰</button>
         </div>
       </li>
     `;
   });
-}
 
+  let percent = Math.round((present / list.length) * 100);
+
+  let info = document.getElementById("info");
+  if (!info) {
+    document.querySelector(".panel").innerHTML += `<p id="info"></p>`;
+  }
+
+  document.getElementById("info").innerText =
+    `Present: ${present}/${list.length} (${percent}%)`;
+}
 
 function setStatus(i, status) {
   students[currentGroup][i].status = status;
+  save();
   render();
 }
-
 
 function searchStudent() {
   let val = document.getElementById("searchInput").value.toLowerCase();
@@ -80,18 +97,10 @@ function searchStudent() {
   render(filtered);
 }
 
-
 function goBack() {
   window.location.href = "index.html";
 }
 
-
 function finishAttendance() {
-  let present = students[currentGroup].filter(s => s.status === "present").length;
-  let late = students[currentGroup].filter(s => s.status === "late").length;
-  let absent = students[currentGroup].filter(s => s.status === "absent").length;
-
-  alert(
-    `Group: ${currentGroup}\nPresent: ${present}\nLate: ${late}\nAbsent: ${absent}`
-  );
+  alert("Attendance saved successfully ✔");
 }
