@@ -27,7 +27,7 @@ window.onload = () => {
   render();
 };
 
-// ADD
+
 function addStudent() {
   let input = document.getElementById("studentInput");
   let name = input.value.trim();
@@ -43,7 +43,7 @@ function addStudent() {
   render();
 }
 
-// RENDER
+
 function render(list = students[currentGroup]) {
   let ul = document.getElementById("studentList");
   ul.innerHTML = "";
@@ -63,13 +63,13 @@ function render(list = students[currentGroup]) {
   });
 }
 
-// STATUS
+
 function setStatus(i, status) {
   students[currentGroup][i].status = status;
   render();
 }
 
-// SEARCH
+
 function searchStudent() {
   let val = document.getElementById("searchInput").value.toLowerCase();
 
@@ -80,12 +80,12 @@ function searchStudent() {
   render(filtered);
 }
 
-// BACK
+
 function goBack() {
   window.location.href = "index.html";
 }
 
-// FINISH
+
 function finishAttendance() {
   let present = students[currentGroup].filter(s => s.status === "present").length;
   let late = students[currentGroup].filter(s => s.status === "late").length;
