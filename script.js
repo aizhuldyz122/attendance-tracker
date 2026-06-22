@@ -11,18 +11,16 @@ let defaultStudents = [
   "Еркебулан"
 ];
 
-
 window.onload = () => {
   let params = new URLSearchParams(window.location.search);
   currentGroup = params.get("group");
 
   if (!currentGroup) {
-    document.body.innerHTML = "<h2 style='text-align:center;color:red'>No group selected</h2>";
+    document.body.innerHTML = "<h2 style='color:red;text-align:center'>No group selected</h2>";
     return;
   }
 
-  let title = document.getElementById("groupName");
-  if (title) title.innerText = currentGroup;
+  document.getElementById("groupName").innerText = currentGroup;
 
   if (!students[currentGroup]) {
     students[currentGroup] = defaultStudents.map(name => ({
@@ -34,7 +32,7 @@ window.onload = () => {
   render();
 };
 
-
+// ADD STUDENT
 function addStudent() {
   let input = document.getElementById("studentInput");
   let name = input.value.trim();
@@ -50,30 +48,33 @@ function addStudent() {
   render();
 }
 
-function render(list = students[currentGroup]) {
+// RENDER (ВАЖНО: КНОПКИ НАСТОЯЩИЕ)
+function render() {
   let ul = document.getElementById("studentList");
   ul.innerHTML = "";
 
-  list.forEach((s, i) => {
+  students[currentGroup].forEach((s, i) => {
     ul.innerHTML += `
       <li>
         <span>${s.name} - <b>${s.status}</b></span>
 
         <div>
-          <button onclick="setStatus(${i}, 'present')">✔</button>
-          <button onclick="setStatus(${i}, 'absent')">✖</button>
-          <button onclick="setStatus(${i}, 'late')">⏰</button>
+          <button onclick="setStatus(${i}, 'present')">✔ Present</button>
+          <button onclick="setStatus(${i}, 'absent')">✖ Absent</button>
+          <button onclick="setStatus(${i}, 'late')">⏰ Late</button>
         </div>
       </li>
     `;
   });
 }
 
+// STATUS
 function setStatus(i, status) {
   students[currentGroup][i].status = status;
   render();
 }
 
+// SEARCH (НЕ ЛОМАЕТ ДАННЫЕ)
 function searchStudent() {
   let val = document.getElementById("searchInput").value.toLowerCase();
 
@@ -90,19 +91,21 @@ function searchStudent() {
         <span>${s.name} - <b>${s.status}</b></span>
 
         <div>
-          <button onclick="setStatus(${i}, 'present')">✔</button>
-          <button onclick="setStatus(${i}, 'absent')">✖</button>
-          <button onclick="setStatus(${i}, 'late')">⏰</button>
+          <button onclick="setStatus(${i}, 'present')">✔ Present</button>
+          <button onclick="setStatus(${i}, 'absent')">✖ Absent</button>
+          <button onclick="setStatus(${i}, 'late')">⏰ Late</button>
         </div>
       </li>
     `;
   });
 }
 
+// BACK
 function goBack() {
   window.location.href = "index.html";
 }
 
+// FINISH
 function finishAttendance() {
   let present = students[currentGroup].filter(s => s.status === "present").length;
   let late = students[currentGroup].filter(s => s.status === "late").length;
