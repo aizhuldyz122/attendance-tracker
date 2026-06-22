@@ -1,78 +1,46 @@
-let students = [
-  { name: "Айбек", present: false },
-  { name: "Аружан", present: false },
-  { name: "Данияр", present: false },
-  { name: "Медина", present: false }
-];
-
-
 function addStudent() {
-  let input = document.getElementById("studentName");
-  let name = input.value.trim();
+  let name = document.getElementById("studentName").value.trim();
+  if (!name) return;
 
-  if (name === "") return;
+  data[currentGroup].push({ name, present: false });
+  document.getElementById("studentName").value = "";
 
-  students.push({
-    name: name,
-    present: false
-  });
-
-  input.value = "";
-  renderStudents();
+  render();
 }
 
+function render(list = data[currentGroup]) {
+  let ul = document.getElementById("list");
+  ul.innerHTML = "";
 
-function renderStudents(list = students) {
-  let container = document.getElementById("studentList");
-  container.innerHTML = "";
-
-  let presentCount = 0;
-
-  list.forEach((student, index) => {
-    if (student.present) presentCount++;
-
-    container.innerHTML += `
+  list.forEach((s, i) => {
+    ul.innerHTML += `
       <li>
-        <span>
-          ${student.name} -
-          <span class="${student.present ? "present" : "absent"}">
-            ${student.present ? "Present" : "Absent"}
-          </span>
-        </span>
-
+        ${s.name} - ${s.present ? "Present" : "Absent"}
         <div>
-          <button onclick="toggleStatus(${index})">Toggle</button>
-          <button onclick="deleteStudent(${index})">Delete</button>
+          <button onclick="toggle(${i})">✔</button>
+          <button onclick="removeStudent(${i})">✖</button>
         </div>
       </li>
     `;
   });
-
-  document.getElementById("summary").innerText =
-    `Total: ${students.length} | Present: ${presentCount}`;
 }
 
-
-function toggleStatus(index) {
-  students[index].present = !students[index].present;
-  renderStudents();
+function toggle(i) {
+  data[currentGroup][i].present = !data[currentGroup][i].present;
+  render();
 }
 
-
-function deleteStudent(index) {
-  students.splice(index, 1);
-  renderStudents();
+function removeStudent(i) {
+  data[currentGroup].splice(i, 1);
+  render();
 }
-
 
 function searchStudent() {
-  let value = document.getElementById("searchBox").value.toLowerCase();
+  let val = document.getElementById("search").value.toLowerCase();
 
-  let filtered = students.filter(student =>
-    student.name.toLowerCase().includes(value)
+  let filtered = data[currentGroup].filter(s =>
+    s.name.toLowerCase().includes(val)
   );
 
-  renderStudents(filtered);
+  render(filtered);
 }
-
-renderStudents();
