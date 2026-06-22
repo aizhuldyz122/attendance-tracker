@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Group Attendance</title>
+  <title>Group</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="top-bar">
   <button onclick="goBack()">⬅ Back</button>
-  <h2 id="groupName">Group</h2>
+  <h2 id="groupName"></h2>
 </div>
 
 <div class="panel">
@@ -16,14 +16,13 @@
   <input id="searchInput" placeholder="Search student..." onkeyup="searchStudent()">
 
   <div class="add-box">
-    <input id="studentInput" placeholder="Оқушы аты (Kazakh name)">
+    <input id="studentInput" placeholder="Student name">
     <button onclick="addStudent()">Add</button>
   </div>
 
   <ul id="studentList"></ul>
 
-
-  <button class="finish" onclick="finishAttendance()">Finish Attendance</button>
+  <button class="finish" onclick="finishAttendance()">Finish</button>
 
 </div>
 
