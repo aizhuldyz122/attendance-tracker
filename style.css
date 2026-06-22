@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  font-family: Arial;
-  background: linear-gradient(135deg, #dbeafe, #eff6ff);
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
 }
 
 
@@ -10,44 +11,34 @@ body {
   padding: 30px;
 }
 
-
 .group-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
-  width: 70%;
+  width: 80%;
   margin: auto;
 }
 
 .group-card {
-  background: #3b82f6;
-  color: white;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
   padding: 20px;
-  text-align: center;
   border-radius: 12px;
+  text-align: center;
   text-decoration: none;
+  color: white;
   font-weight: bold;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 .group-card:hover {
-  background: #2563eb;
   transform: scale(1.05);
 }
 
-.top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px;
-  background: #2563eb;
-  color: white;
-}
 
 .panel {
-  width: 400px;
+  width: 420px;
   margin: 20px auto;
-  background: white;
+  background: #1e293b;
   padding: 20px;
   border-radius: 12px;
 }
@@ -57,36 +48,40 @@ input {
   width: 100%;
   padding: 10px;
   margin: 5px 0;
+  border-radius: 8px;
+  border: none;
 }
 
-
 button {
-  padding: 8px 10px;
+  padding: 6px 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.add-box {
-  display: flex;
-  gap: 10px;
-}
+
+.present { color: #22c55e; font-weight: bold; }
+.absent { color: #ef4444; font-weight: bold; }
+.late { color: #f59e0b; font-weight: bold; }
 
 
 li {
   list-style: none;
   padding: 10px;
   margin: 5px 0;
-  background: #f1f5f9;
+  background: #334155;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
-  border-radius: 8px;
 }
 
 
-.present { color: green; }
-.absent { color: red; }
-.late { color: orange; }
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #0ea5e9;
+}
 
 
 .finish {
@@ -94,4 +89,5 @@ li {
   margin-top: 10px;
   background: #22c55e;
   color: white;
+  padding: 10px;
 }
