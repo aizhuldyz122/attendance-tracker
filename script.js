@@ -11,6 +11,7 @@ let defaultStudents = [
   "Еркебулан"
 ];
 
+
 window.onload = () => {
   let params = new URLSearchParams(window.location.search);
   currentGroup = params.get("group");
@@ -27,6 +28,7 @@ window.onload = () => {
   render();
 };
 
+
 function addStudent() {
   let input = document.getElementById("studentInput");
   let name = input.value.trim();
@@ -42,11 +44,11 @@ function addStudent() {
   render();
 }
 
-function render(list = students[currentGroup]) {
+function render(data = students[currentGroup]) {
   let ul = document.getElementById("studentList");
   ul.innerHTML = "";
 
-  list.forEach((s, i) => {
+  data.forEach((s, i) => {
     ul.innerHTML += `
       <li>
         <span>${s.name} - <b class="${s.status}">${s.status}</b></span>
@@ -61,10 +63,12 @@ function render(list = students[currentGroup]) {
   });
 }
 
+
 function setStatus(i, status) {
   students[currentGroup][i].status = status;
   render();
 }
+
 
 function searchStudent() {
   let val = document.getElementById("searchInput").value.toLowerCase();
@@ -76,6 +80,21 @@ function searchStudent() {
   render(filtered);
 }
 
+
 function goBack() {
   window.location.href = "index.html";
+}
+
+
+function finishAttendance() {
+  let present = students[currentGroup].filter(s => s.status === "present").length;
+  let late = students[currentGroup].filter(s => s.status === "late").length;
+  let absent = students[currentGroup].filter(s => s.status === "absent").length;
+
+  alert(
+    `Group: ${currentGroup}\n` +
+    `Present: ${present}\n` +
+    `Late: ${late}\n` +
+    `Absent: ${absent}`
+  );
 }
