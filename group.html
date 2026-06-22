@@ -6,20 +6,26 @@
 </head>
 <body>
 
-<h1 id="groupTitle">Group</h1>
+<div class="top-bar">
+  <button onclick="goBack()">⬅ Back</button>
+  <h2 id="groupName">Group</h2>
+</div>
 
-<div class="container">
+<div class="panel">
 
-  <input id="studentName" placeholder="Student name">
-  <button onclick="addStudent()">Add</button>
+  <input id="searchInput" placeholder="Search student..." onkeyup="searchStudent()">
 
-  <input id="search" placeholder="Search..." onkeyup="searchStudent()">
+  <div class="add-box">
+    <input id="studentInput" placeholder="Оқушы аты (Kazakh name)">
+    <button onclick="addStudent()">Add</button>
+  </div>
 
-  <ul id="list"></ul>
+  <ul id="studentList"></ul>
+
+  <button class="finish">Finish Attendance</button>
 
 </div>
 
-<script src="groups.js"></script>
 <script src="script.js"></script>
 
 </body>
